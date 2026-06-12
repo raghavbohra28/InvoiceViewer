@@ -11,18 +11,23 @@ namespace BuggyApp.Controllers
         [HttpGet]
         public IActionResult GetInvoice()
         {
-            List<Item> items = null;
-            if (items.Count == 0) // NullReferenceException
+            List<Item> items = new List<Item>
             {
-                return Ok(new { items });
+                new Item { Name = "Widget A", Price = 19.99 }
+            };
+
+            if (items == null || items.Count == 0) 
+            {
+                return NotFound("No invoice found");
             }
-            return NotFound("No invoice found");
+
+            return Ok(new { items });
         }
 
         public class Item
         {
-            public string name { get; set; }
-            public double price { get; set; }
+            public string Name { get; set; }
+            public double Price { get; set; }
         }
     }
 }
