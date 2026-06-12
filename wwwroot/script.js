@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Force it to point explicitly to your live Railway API endpoint
-    fetch('https://invoiceviewer-production-1090.up.railway.app/api/invoice')
+    // fetch('https://invoiceviewer-production-1090.up.railway.app/api/invoice')
+    fetch('api/invoice')
         .then(resp => {
             if (!resp.ok) {
                 throw new Error(`HTTP error! Status: ${resp.status}`);
