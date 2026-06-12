@@ -1,6 +1,6 @@
-
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('/api/invoice')
+    // Force it to point explicitly to your live Railway API endpoint
+    fetch('https://invoiceviewer-production-1090.up.railway.app/api/invoice')
         .then(resp => {
             if (!resp.ok) {
                 throw new Error(`HTTP error! Status: ${resp.status}`);
@@ -8,12 +8,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return resp.json();
         })
         .then(data => {
-            let html = '<ul style="list-style-type: none; padding: 0;">';
+            let html = '<ul style="list-style-type: none; padding: 0; margin: 0; font-size: 18px;">';
             data.items.forEach(item => {
-                html += `<li><strong>${item.name}</strong> - $${item.price}</li>`;
+                html += `<li style="padding: 5px 0;"><strong>${item.name}</strong> - $${item.price}</li>`;
             });
             html += '</ul>';
             document.getElementById('invoice-container').innerHTML = html;
         })
-        .catch(er => console.error("Failed to load invoice:", er));
+        .catch(er => {
+            console.error("Failed to load invoice:", er);
+            document.getElementById('invoice-container').innerHTML = `<p style="color: red;">Error loading invoice details.</p>`;
+        });
 });
